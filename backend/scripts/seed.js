@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Stock = require('../models/Stock');
+const User = require('../models/User');
 
 dotenv.config();
 
@@ -17,12 +18,26 @@ const stocks = [
 
 const seedData = async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI);
         await Stock.deleteMany({});
         console.log('Cleared existing stocks');
 
         await Stock.insertMany(stocks);
         console.log('Seed stocks added successfully');
+
+        // Create admin user if not exists
+        const adminExists = await User.findOne({ email: 'admin@stocktrade.com' });
+        if (!adminExists) {
+            await User.create({
+                name: 'Admin',
+                email: 'admin@stocktrade.com',
+                password: 'admin123',
+                role: 'admin',
+                balance: 100000
+            });
+            console.log('Admin user created: admin@stocktrade.com / admin123');
+        } else {
+            console.log('Admin user already exists');
+        }
     } catch (error) {
         console.error('Error seeding data:', error);
     }

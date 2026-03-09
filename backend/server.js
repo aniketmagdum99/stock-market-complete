@@ -59,6 +59,20 @@ const connectDB = async () => {
       await seedData();
     }
 
+    // Ensure admin user exists
+    const User = require('./models/User');
+    const adminExists = await User.findOne({ email: 'admin@stocktrade.com' });
+    if (!adminExists) {
+      await User.create({
+        name: 'Admin',
+        email: 'admin@stocktrade.com',
+        password: 'admin123',
+        role: 'admin',
+        balance: 100000
+      });
+      console.log('Admin user created: admin@stocktrade.com / admin123');
+    }
+
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
