@@ -1,0 +1,26 @@
+{
+  "name": "stock-trading-app",
+  "version": "1.0.0",
+  "description": "Full-stack MERN stock trading application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "seed": "cd backend && node scripts/seed.js"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.6",
+    "bootstrap": "^5.3.2",
+    "chart.js": "^4.5.1",
+    "concurrently": "^8.2.2",
+    "lucide-react": "^0.576.0",
+    "react-chartjs-2": "^5.3.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.13.1"
+  }
+}
